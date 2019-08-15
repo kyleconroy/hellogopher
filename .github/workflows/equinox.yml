@@ -24,6 +24,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
-    - run: powershell -command "Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip"
-    - run: powershell -command "Expand-Archive -Path release-tool-stable-windows-amd64.zip"
-    - run: ./equinox.exe help
+    - run: powershell -command 'Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip'
+    - run: powershell -command 'Expand-Archive -Path release-tool-stable-windows-amd64.zip'
+    - run: powershell -command 'Start-Process -FilePath "equinox.exe" -ArgumentList "help"'
