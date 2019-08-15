@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@master
     - run: go build ./...
 
-	windows:
+  windows:
     name: Build on Windows
     runs-on: windows-latest
     steps:
