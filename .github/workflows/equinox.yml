@@ -17,17 +17,17 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: brew install eqnxio/equinox/release-tool
-    - run: equinox help
+    - name: equinox release
+      env:
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+      run: equinox release --version=$GITHUB_SHA --platforms=darwin_amd64 --app=app_b2cWFxqmFmU --token=$EQUINOX_API_TOKEN github.com/kyleconroy/hellogopher
 
   windows:
     name: Build on Windows
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
-    - run: Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip
-      shell: powershell
-    - run: Expand-Archive -Path release-tool-stable-windows-amd64.zip
-      shell: powershell
-    - run: Start-Process -FilePath "equinox.exe" -ArgumentList "help"
-      shell: powershell
+    - run: powershell -command 'Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip'
+    - run: powershell -command 'Expand-Archive -Path release-tool-stable-windows-amd64.zip'
+    - run: powershell -command 'Start-Process -FilePath "equinox.exe"'
 
