@@ -24,7 +24,7 @@ jobs:
     - run: 'Expand-Archive -Path release-tool-stable-windows-amd64.zip'
       shell: pwsh
     - name: equinox release
-      run: 'Start-Process -FilePath "release-tool-stable-windows-amd64\equinox.exe" -ArgumentList "release", "version=$Env:GITHUB_SHA", "--draft", "--platforms=windows_amd64", "--app=app_b2cWFxqmFmU", "--token=$Env:EQUINOX_API_TOKEN", "github.com/kyleconroy/hellogopher"'
+      run: 'Start-Process -FilePath "release-tool-stable-windows-amd64\equinox.exe" -NoNewWindow -Wait -ArgumentList "release", "version=$Env:GITHUB_SHA", "--draft", "--platforms=windows_amd64", "--app=app_b2cWFxqmFmU", "--token=$Env:EQUINOX_API_TOKEN", "github.com/kyleconroy/hellogopher"'
       env:
         EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
         EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
