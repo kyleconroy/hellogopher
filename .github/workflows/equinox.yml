@@ -7,18 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - run: go build ./...
+    - run: curl -O https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-linux-amd64.tgz
+    - run: tar -xzfv release-tool-stable-linux-amd64.tgz
+    - run: equinox help
 
   macos:
     name: Build on macOS
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@master
-    - run: go build ./...
+    - run: brew install eqnxio/equinox/release-tool
+    - run: equinox help
 
   windows:
     name: Build on Windows
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
-    - run: go build ./...
+    - run: Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip
