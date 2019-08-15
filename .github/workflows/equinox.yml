@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: curl -O https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-linux-amd64.tgz
-    - run: tar -xzfv release-tool-stable-linux-amd64.tgz
+    - run: tar -xzvf release-tool-stable-linux-amd64.tgz
     - run: equinox help
 
   macos:
@@ -24,4 +24,4 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
-    - run: Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip
+    - run: powershell -command "Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip"
