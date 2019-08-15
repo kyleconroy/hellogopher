@@ -1,0 +1,52 @@
+name: Publish to Equinox
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+
+  macos:
+    name: Build on macOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: brew install eqnxio/equinox/release-tool
+    - name: equinox release
+      env:
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
+      run: equinox release --version=$GITHUB_SHA --draft --platforms=darwin_amd64 --app=app_b2cWFxqmFmU --token=$EQUINOX_API_TOKEN github.com/kyleconroy/hellogopher
+
+  windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: 'Invoke-WebRequest https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-windows-amd64.zip -OutFile release-tool-stable-windows-amd64.zip'
+      shell: pwsh
+    - run: 'Expand-Archive -Path release-tool-stable-windows-amd64.zip'
+      shell: pwsh
+    - name: equinox release
+      run: 'Start-Process -FilePath "release-tool-stable-windows-amd64\equinox.exe" -NoNewWindow -Wait -ArgumentList "release", "--version=$Env:GITHUB_SHA", "--draft", "--platforms=windows_amd64", "--app=app_b2cWFxqmFmU", "--token=$Env:EQUINOX_API_TOKEN", "github.com/kyleconroy/hellogopher"'
+      env:
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
+      shell: pwsh
+
+  linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    needs: [macos, windows]
+    steps:
+    - uses: actions/checkout@master
+    - run: curl -O https://bin.equinox.io/c/mBWdkfai63v/release-tool-stable-linux-amd64.tgz
+    - run: tar -xzvf release-tool-stable-linux-amd64.tgz
+    - name: equinox release
+      env:
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
+      run: ./equinox release --version=$GITHUB_SHA --platforms=linux_amd64 --app=app_b2cWFxqmFmU --token=$EQUINOX_API_TOKEN github.com/kyleconroy/hellogopher
+
+
