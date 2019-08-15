@@ -1,0 +1,24 @@
+name: Publish to Equinox
+on: [push]
+jobs:
+
+  linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: go build ./...
+
+  macos:
+    name: Build on macOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: go build ./...
+
+	windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: go build ./...
