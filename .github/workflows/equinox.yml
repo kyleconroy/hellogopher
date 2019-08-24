@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: equinox-io/tool/release@master
+    - uses: equinox-io/tool@master
       with:
         app: app_b2cWFxqmFmU
         version: ${{ github.sha }}
