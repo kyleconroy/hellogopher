@@ -3,26 +3,48 @@ name: equinox.io
 on: push
 
 jobs:
-  equinox:
-    name: release
-    runs-on: ubuntu-latest
+
+  macos:
+    name: Build on macOS
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@master
     - uses: equinox-io/tool/release@beta
       with:
         app: app_b2cWFxqmFmU
         version: ${{ github.sha }}
-        platforms: 'darwin_amd64,linux_amd64'
+        platforms: darwin_amd64
+        draft: true
       env:
         EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
         EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
-    - uses: equinox-io/tool/publish@beta
+
+  windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: equinox-io/tool/release@beta
       with:
         app: app_b2cWFxqmFmU
-        release: ${{ github.sha }}
-        channel: devel
+        version: ${{ github.sha }}
+        platforms: windows_amd64
+        draft: true
       env:
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
         EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
-    - uses: equinox-io/tool/genkey@beta
-    - uses: equinox-io/tool/install@beta
-    - run: equinox
+
+  linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    needs: [macos, windows]
+    steps:
+    - uses: actions/checkout@master
+    - uses: equinox-io/tool/release@beta
+      with:
+        app: app_b2cWFxqmFmU
+        version: ${{ github.sha }}
+        platforms: linux_amd64
+      env:
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
