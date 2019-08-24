@@ -16,6 +16,13 @@ jobs:
       env:
         EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
         EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+    - uses: equinox-io/tool/publish@deps
+      with:
+        app: app_b2cWFxqmFmU
+        release: ${{ github.sha }}
+        channel: devel
+      env:
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+    - uses: equinox-io/tool/genkey@deps
     - uses: equinox-io/tool/install@deps
     - run: equinox
-    - run: this-will-error
