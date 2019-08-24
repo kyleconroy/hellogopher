@@ -1,6 +1,9 @@
 name: equinox.io
 
-on: push
+on:
+  push:
+    branches:
+    - master
 
 jobs:
 
