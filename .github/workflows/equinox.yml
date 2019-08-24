@@ -9,12 +9,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: equinox-io/tool/release@deps
+      with:
+        app: app_b2cWFxqmFmU
+        version: ${{ github.sha }}
+        platforms: 'darwin_amd64,linux_amd64'
+      env:
+        EQUINOX_SIGNING_KEY: ${{ secrets.EQUINOX_SIGNING_KEY }}
+        EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
     - uses: equinox-io/tool/install@deps
-      #  with:
-      #    app: app_b2cWFxqmFmU
-      #    version: ${{ github.sha }}
-      #    signing_key: ${{ secrets.EQUINOX_SIGNING_KEY }}
-      #    platforms: 'darwin_amd64,linux_amd64'
-      #  env:
-      #    EQUINOX_API_TOKEN: ${{ secrets.EQUINOX_API_TOKEN }}
+    - run: equinox
     - run: this-will-error
