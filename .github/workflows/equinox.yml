@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: equinox-io/tool@deps
+    - uses: equinox-io/tool/release@deps
+    - uses: equinox-io/tool/install@deps
       #  with:
       #    app: app_b2cWFxqmFmU
       #    version: ${{ github.sha }}
